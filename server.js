@@ -14,7 +14,7 @@ app.listen(PORT, () => {
 		url: "http://sync-kitchen.herokuapp.com/", // url string
 		interval: 60000 * 25 // interval in milliseconds (1 minute in this example)
 	}).start();
-	schedule.scheduleJob("*/2 * * * *", async () => {
+	schedule.scheduleJob("* */6 * * *", async () => {
 		console.log("done");
 		await calendarSync();
 	});
