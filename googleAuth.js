@@ -5,7 +5,7 @@ export default async () => {
 		let jwtClient = new google.auth.JWT(
 			credentials.client_email,
 			null,
-			credentials.private_key,
+			credentials.private_key.replace(/\\n/gm, "\n"),
 			["https://www.googleapis.com/auth/calendar"]
 		);
 		//authenticate request
