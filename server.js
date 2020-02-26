@@ -10,12 +10,11 @@ app.get("/", (req, res) => {
 	res.send("Api working");
 });
 app.listen(PORT, () => {
-	console.log(process.env.private_key_calendar);
 	wakeUp({
 		url: "http://sync-kitchen.herokuapp.com/", // url string
 		interval: 60000 * 25 // interval in milliseconds (1 minute in this example)
 	}).start();
-	schedule.scheduleJob("19 * * * *", async () => {
+	schedule.scheduleJob("*/4 * * * *", async () => {
 		console.log("done");
 		await calendarSync();
 	});
