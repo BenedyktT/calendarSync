@@ -9,7 +9,9 @@ export default async (req, res) => {
 		let eventList = await calendar.events.list({
 			calendarId: "info.hotellaki@gmail.com",
 			singleEvents: true,
-			timeMin: moment().format(),
+			timeMin: moment()
+				.subtract(1, "day")
+				.format(),
 			orderBy: "startTime",
 			maxResults: 99999
 		});
