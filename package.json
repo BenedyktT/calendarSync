@@ -1,0 +1,34 @@
+{
+  "name": "calendarsync",
+  "version": "1.0.0",
+  "description": "Get latest guest occupancy, transform response and map it to the google calendar",
+  "main": "server.js",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "googleapis": "^47.0.0",
+    "moment": "^2.24.0",
+    "node-schedule": "^1.3.2",
+    "nodemailer": "^6.4.3",
+    "nodemon": "^2.0.2",
+    "xml-js": "^1.6.11"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node -r esm server.js",
+    "server": "nodemon -r esm server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenedyktT/calendarSync.git"
+  },
+  "author": "Benedykt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BenedyktT/calendarSync/issues"
+  },
+  "homepage": "https://github.com/BenedyktT/calendarSync#readme"
+}
