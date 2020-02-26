@@ -3,9 +3,9 @@ import { credentials } from "./credentials";
 export default async () => {
 	try {
 		let jwtClient = new google.auth.JWT(
-			credentials.client_email,
+			"calendarconnect@lakiconnect.iam.gserviceaccount.com",
 			null,
-			credentials.private_key,
+			process.env.private_key_calendar,
 			["https://www.googleapis.com/auth/calendar"]
 		);
 		//authenticate request
