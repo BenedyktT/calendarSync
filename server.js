@@ -6,7 +6,9 @@ import wakeUp from "./wakeUp";
 
 const PORT = process.env.PORT || 5000;
 const app = express();
-app.get("/", calendarSync);
+app.get("/", (req, res) => {
+	res.send("Api working");
+});
 app.listen(PORT, () => {
 	wakeUp({
 		url: "http://sync-kitchen.herokuapp.com/", // url string
