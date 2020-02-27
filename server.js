@@ -11,10 +11,10 @@ app.get("/", (req, res) => {
 });
 app.listen(PORT, () => {
 	wakeUp({
-		url: "http://sync-kitchen.herokuapp.com/", // url string
+		url: "http://blooming-tundra-68800.herokuapp.com/", // url string
 		interval: 60000 * 25 // interval in milliseconds (1 minute in this example)
 	}).start();
-	schedule.scheduleJob("* */6 * * *", async () => {
+	schedule.scheduleJob("* */5 * * * *", async () => {
 		console.log("done");
 		await calendarSync();
 	});
