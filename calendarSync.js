@@ -2,8 +2,10 @@ import moment from "moment";
 import googleAuth from "./googleAuth";
 import sendEmail from "./sendEmail";
 import getOccupancy from "./getOccupancy";
+import apiAuth from "./apiAuth";
 export default async (req, res) => {
 	try {
+		apiAuth();
 		const response = await getOccupancy();
 		const calendar = await googleAuth();
 		let eventList = await calendar.events.list({

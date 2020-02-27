@@ -2,14 +2,42 @@ import axios from "axios";
 import moment from "moment";
 import convert from "xml-js";
 
+const getOutofOrder = async startDate => {
+	const stayFrom = moment(startDate)
+		.subtract(1, "month")
+		.format("YYYY-MM-DD");
+	const stayTo = moment(stayFrom)
+		.add(2, "month")
+		.format("YYYY-MM-DD");
+	try {
+		const response = await axios.get(
+			`services/bookingapi/reservations?stayFromDate=${startDate}&stayToDate=${stayTo}&includeOutOfOrder=true&includeInvoices=false&modifiedSince=${moment().format(
+				"YYYY-MM-DDTHH:mm:ss"
+			)}`
+		);
+		const result = response.data.reservations.map(e => ({
+			rooms: e.rooms.length,
+			startDate: e.rooms[0].dateArrival,
+			endDate: e.rooms[0].dateDeparture,
+			room: e.rooms[0].roomNumber
+		}));
+		return result;
+	} catch (error) {
+		console.error(error);
+		return;
+	}
+};
+
 export default async (req, res) => {
 	try {
 		const today = moment().format("YYYY-MM-DD");
 		const monthFromToday = moment()
 			.add(8, "month")
 			.format("YYYY-MM-DD");
+		const outOfOrder = await getOutofOrder(today);
+
 		const response = await axios.get(
-			`https://api.roomercloud.net/services/bookingapi/availability1?hotel=LAKI&channelCode=BDC&channelManagerCode=OWN&arrivalDate=${today}&departureDate=${monthFromToday}`
+			`https://api.roomercloud.net/services/bookingapi/availability1?hotel=LAKI&channelCode=TRAVEL&channelManagerCode=OWN&arrivalDate=${today}&departureDate=${monthFromToday}`
 		);
 		const result = convert.xml2js(response.data, {
 			compact: true,
@@ -18,12 +46,9 @@ export default async (req, res) => {
 		const month = result.availability.inventory.inventoryItem.map(e => {
 			const availabilityToOccupancy = (baseCode, availability) => {
 				let occupancy = 0;
-				if (baseCode.includes("DSUP")) occupancy = 20 - availability;
-				if (baseCode.includes("QUE")) occupancy = 9 - availability;
-				if (baseCode.includes("TWDB")) occupancy = 27 - availability;
-				if (baseCode.includes("SUI")) occupancy = 1 - availability;
-				if (baseCode.includes("DBL")) occupancy = 39 - availability;
-				if (baseCode.includes("ECO")) occupancy = 24 - availability;
+				if (baseCode === "SUP-S") occupancy = 1 - availability;
+				if (baseCode === "DBL-S") occupancy = 39 - availability;
+				if (baseCode === "ECO-S") occupancy = 24 - availability;
 
 				return occupancy;
 			};
@@ -82,9 +107,32 @@ export default async (req, res) => {
 						)
 					];
 				} else return acc;
+			}, [])
+			.reduce((acc, curr) => {
+				const findDate = outOfOrder.filter(e => {
+					return (
+						moment(curr.date).isSameOrAfter(e.startDate) &&
+						moment(curr.date).isBefore(e.endDate)
+					);
+				});
+
+				if (findDate.length) {
+					const totalOccupancy = findDate.reduce(
+						(acc, curr) => (acc += curr.rooms),
+						0
+					);
+					return [
+						...acc,
+						{ ...curr, occupancy: curr.occupancy - totalOccupancy }
+					];
+				}
+
+				return [...acc, curr];
 			}, []);
+
 		return total;
 	} catch (error) {
-		return null;
+		console.error(error);
+		return;
 	}
 };
