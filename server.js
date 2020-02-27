@@ -16,7 +16,7 @@ app.listen(PORT, () => {
 		url: "http://blooming-tundra-68800.herokuapp.com/", // url string
 		interval: 60000 * 25 // interval in milliseconds (1 minute in this example)
 	}).start();
-	schedule.scheduleJob("0 */10  * * * *", async () => {
+	schedule.scheduleJob("0 */5 * * *", async () => {
 		console.log("done");
 		await calendarSync();
 	});
