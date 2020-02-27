@@ -16,6 +16,6 @@ app.listen(PORT, () => {
 	}).start();
 	schedule.scheduleJob("* */5 * * * *", async () => {
 		console.log("done");
-		await calendarSync();
+		/* 	await calendarSync(); */
 	});
 });
