@@ -11,7 +11,7 @@ const getOutofOrder = async startDate => {
 		.format("YYYY-MM-DD");
 	try {
 		const response = await axios.get(
-			`services/bookingapi/reservations?stayFromDate=${startDate}&stayToDate=${stayTo}&includeOutOfOrder=true&includeInvoices=false&modifiedSince=${moment().format(
+			`services/bookingapi/reservations?stayFromDate=${stayFrom}&stayToDate=${stayTo}&includeOutOfOrder=true&includeInvoices=false&modifiedSince=${moment().format(
 				"YYYY-MM-DDTHH:mm:ss"
 			)}`
 		);
