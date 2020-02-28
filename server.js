@@ -7,7 +7,6 @@ import apiAuth from "./apiAuth";
 
 const PORT = process.env.PORT || 5000;
 const app = express();
-app.use(apiAuth);
 app.get("/", (req, res) => {
 	return res.send("api working");
 });
@@ -16,7 +15,7 @@ app.listen(PORT, () => {
 		url: "http://blooming-tundra-68800.herokuapp.com/", // url string
 		interval: 60000 * 25 // interval in milliseconds (1 minute in this example)
 	}).start();
-	schedule.scheduleJob("0 */5 * * *", async () => {
+	schedule.scheduleJob("*/27 * * * *", async () => {
 		console.log("done");
 		await calendarSync();
 	});
