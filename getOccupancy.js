@@ -133,6 +133,6 @@ export default async (req, res) => {
 		return total;
 	} catch (error) {
 		console.error(error);
-		return;
+		return error;
 	}
 };

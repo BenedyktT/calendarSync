@@ -111,6 +111,7 @@ export default async (req, res) => {
 		return "done";
 	} catch (error) {
 		console.log(error);
+		return;
 	}
 };
 
