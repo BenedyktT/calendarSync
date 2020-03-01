@@ -13,9 +13,11 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
 	wakeUp({
 		url: "http://blooming-tundra-68800.herokuapp.com/", // url string
-		interval: 60000 * 25 // interval in milliseconds (1 minute in this example)
+		interval: 60000 * 25, // interval in milliseconds (1 minute in this example)
+		startNap: [21, 30, 0, 0], // the time to start nap in UTC, as [h, m, s, ms] (05:00 UTC in this example)
+		endNap: [9, 00, 59, 999]
 	}).start();
-	schedule.scheduleJob("0 */5 * * *", async () => {
+	schedule.scheduleJob("0 */1 * * *", async () => {
 		console.log("done");
 		await calendarSync();
 	});

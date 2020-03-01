@@ -16,6 +16,7 @@ export default changes => {
 	<p>Hey Friend,</p>
 	
    <p>This email is send to let you know about update of our kitchen calendar</p>
+   <p>Now this email will come just 1-2 times per day while the calendar is updating every 24 minutes
    <p>There were ${text} updates</p>
 	${changes.length &&
 		changes.map(
@@ -26,7 +27,7 @@ export default changes => {
 	const template = {
 		from: process.env.EMAIL_LOGIN,
 		to: "hotellaki@hotellaki.is",
-		subject: "Updated Calendar",
+		subject: "Calendar Update",
 		html
 	};
 	transporter.sendMail(template, (err, info) => {

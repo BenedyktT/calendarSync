@@ -106,7 +106,9 @@ export default async (req, res) => {
 
 			return acc;
 		}, []);
-		sendEmail(accUpdates);
+		if (accUpdates.length > 10) {
+			sendEmail(accUpdates);
+		}
 
 		return "done";
 	} catch (error) {
