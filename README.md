@@ -1,4 +1,4 @@
-###### This is backend app exclusively, it has been build in node.js
+### This is backend app exclusively, it has been build in node.js
 
 Its goal is to keep restaurant google calendar updated
 To achieve that it connects to reservation API and map room availability. Based on this it calculates number of rooms sold.
