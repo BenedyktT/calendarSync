@@ -31,7 +31,7 @@ export default async (req, res) => {
     const outOfOrder = await getOutofOrder(today);
 
     const response = await axios.get(
-      `https://api.roomercloud.net/services/bookingapi/availability1?hotel=LAKI&channelCode=HOT&channelManagerCode=OWN&arrivalDate=${today}&departureDate=${monthFromToday}`
+      `https://api.roomercloud.net/services/bookingapi/availability1?hotel=LAKI&channelCode=TRAVEL&channelManagerCode=OWN&arrivalDate=${today}&departureDate=${monthFromToday}`
     );
     const result = convert.xml2js(response.data, {
       compact: true,
